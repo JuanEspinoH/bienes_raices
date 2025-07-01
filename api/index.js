@@ -11,10 +11,8 @@ app.set('trust proxy', true)
 app.set('view engine', 'pug')
 app.set('views', 'views')
 
-// Create application/x-www-form-urlencoded parser
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-
 app.use(express.static('public'))
 
 app.use('/auth', authRouter)
