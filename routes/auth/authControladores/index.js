@@ -40,7 +40,7 @@ export const registro = async (req, res) => {
     if (checkExistingUser !== null) {
       return res.render('auth/sign-up', {
         pagina: 'Crear Cuenta',
-        errores: [{ msg: 'Email ya esta registrado' }],
+        errores: [{ msg: 'Email ya esta registrado 1' }],
         usuario: {
           nombre: req.body.nombre,
           password: req.body.password,
