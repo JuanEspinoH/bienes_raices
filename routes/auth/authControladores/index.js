@@ -74,7 +74,7 @@ export const registro = async (req, res) => {
   })
 }
 
-export const confirmar = async (req, res, next) => {
+export const confirmar = async (req, res) => {
   const { token } = req.params
   const usuario = await prisma.usuario.findFirst({
     where: {
@@ -102,6 +102,4 @@ export const confirmar = async (req, res, next) => {
     pagina: 'Cuenta Confirmada',
     mensaje: 'La cuenta se confirmo correctamente',
   })
-
-  next()
 }
