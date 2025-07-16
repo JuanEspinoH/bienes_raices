@@ -16,21 +16,21 @@ block contenido
                 form(class="space-y-5" method="POST" action="/auth/sign-up" novalidate)
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="nombre" ) Tu Nombre
-                        input#nombre.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400( placeholder="Tu Nombre" type="text" name="nombre" value=usuario.nombre ? usuario.nombre :"")
+                        input#nombre.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400( placeholder="Tu Nombre" type="text" name="nombre" value=usuario ? usuario.nombre :"")
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="email" ) Email de Registro
                         input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400( placeholder="Tu Email" type="email" name="email"
-                        value=usuario.email ? usuario.email :""
+                        value=usuario ? usuario.email :""
                         )
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="password") Password
                         input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu Contraseña" type="password" name="password"
-                        value=usuario.password ? usuario.password :""
+                        value=usuario ? usuario.password :""
                         )
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="repetir_password") Repetir Password
                         input#repetir_password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Repite Contraseña" type="password" name="repetir_password"
-                                                value=usuario.repetir_password ? usuario.repetir_password :""
+                                                value=usuario ? usuario.repetir_password :""
 
                         )
 
