@@ -1,30 +1,45 @@
 import prisma from '../../../database/db.js'
-import { userValidations } from '../../../utils/validations.js'
-import { enviarEmail } from '../../../utils/emailSender.js'
+import {
+  userValidations,
+  passwordValidations,
+  resetValidations,
+} from '../../../utils/validations.js'
+import {
+  enviarEmail,
+  enviarEmailPassword,
+  enviarEmailPasswordReset,
+} from '../../../utils/emailSender.js'
 import { generarToken } from '../../../utils/generarToken.js'
+import argon2 from 'argon2'
 
 export const formularioLogin = async (req, res) => {
   res.render('auth/login', { autenticado: true, pagina: 'Iniciar Sesion' })
 }
 
 export const formularioSignUp = async (req, res) => {
-  res.render('auth/sign-up', { autenticado: true, pagina: 'Crear Cuenta' })
+  res.render('auth/sign-up', {
+    autenticado: true,
+    pagina: 'Crear Cuenta',
+    csrfToken: req.csrfToken(),
+  })
 }
 
 export const formularioOlvidarContraseña = async (req, res) => {
   res.render('auth/olvide-password', {
-    autenticado: true,
-    pagina: 'Recuperar Contraseña',
+    csrfToken: req.csrfToken(),
+    pagina: 'Recuperar tu acceso a Bienes Raices',
   })
 }
 export const registro = async (req, res) => {
   const { nombre, email, password, repetir_password } = req.body
 
   const checkUserData = await userValidations(req)
+
   if (checkUserData.errors.length !== 0) {
     return res.render('auth/sign-up', {
       pagina: 'Crear Cuenta',
       errores: checkUserData.errors,
+      csrfToken: req.csrfToken(),
       usuario: {
         nombre: req.body.nombre,
         password: req.body.password,
@@ -42,7 +57,8 @@ export const registro = async (req, res) => {
     if (checkExistingUser !== null) {
       return res.render('auth/sign-up', {
         pagina: 'Crear Cuenta',
-        errores: [{ msg: 'Email ya esta registrado 1' }],
+        errores: [{ msg: 'Email ya esta registrado ' }],
+        csrfToken: req.csrfToken(),
         usuario: {
           nombre: req.body.nombre,
           password: req.body.password,
@@ -102,4 +118,136 @@ export const confirmar = async (req, res) => {
     pagina: 'Cuenta Confirmada',
     mensaje: 'La cuenta se confirmo correctamente',
   })
+}
+
+export const resetPassword = async (req, res) => {
+  const { email } = req.body
+  const checkPasswordData = await passwordValidations(req)
+
+  if (checkPasswordData.errors.length !== 0) {
+    return res.render('auth/olvide-password', {
+      pagina: 'Reestablecer Contraseña',
+      errores: checkPasswordData.errors,
+      csrfToken: req.csrfToken(),
+      usuario: {
+        email: req.body.email,
+      },
+    })
+  }
+
+  try {
+    const checkUser = await prisma.usuario.findFirst({
+      where: {
+        email,
+      },
+    })
+
+    if (checkUser === null) {
+      return res.render('auth/olvide-password', {
+        pagina: 'Reestablecer Contraseña',
+        errores: [{ msg: 'Email NO esta registrado' }],
+        csrfToken: req.csrfToken(),
+        usuario: {
+          email: req.body.email,
+        },
+      })
+    }
+    const token = generarToken()
+
+    await prisma.usuario.update({
+      where: {
+        email,
+      },
+      data: {
+        token,
+      },
+    })
+
+    await enviarEmailPassword({
+      nombre: checkUser.nombre,
+      email: checkUser.email,
+      token: token,
+    })
+
+    res.render('auth/mensaje', {
+      pagina: 'Correo para reestablecer la contraseña enviado',
+      mensaje:
+        'Hemos enviado un Email , presiona el enlace en el correo para reestablecer y continuar.',
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const comprobarToken = async (req, res) => {
+  const { token } = req.params
+
+  try {
+    const user = await prisma.usuario.findFirst({
+      where: {
+        token,
+      },
+    })
+    console.log(user)
+
+    if (user === null) {
+      return res.render('auth/reset-password', {
+        pagina: 'Reestablecer Contraseña',
+        errores: [{ msg: 'Email NO esta registrado o link caducado' }],
+        csrfToken: req.csrfToken(),
+        usuario: {
+          password: req.body.password,
+          repetir_password: req.body.repetir_password,
+          token: req.params.token,
+        },
+      })
+    }
+  } catch (error) {
+    console.log(error)
+  }
+
+  res.render('auth/reset-password', {
+    pagina: 'Reestablecer Contraseña',
+    csrfToken: req.csrfToken(),
+    usuario: {
+      password: req.body.password,
+      repetir_password: req.body.repetir_password,
+      token: req.params.token,
+    },
+  })
+}
+
+export const nuevoPassword = async (req, res) => {
+  const { password, repetir_password } = req.body
+  const { token } = req.params
+
+  const checkPassword = resetValidations(req)
+
+  try {
+    const passwordHasheada = await argon2.hash(password)
+    const user = await prisma.usuario.findFirst({
+      where: {
+        token,
+      },
+    })
+    console.log(passwordHasheada)
+    console.log(user)
+
+    // await prisma.usuario.update({
+    //   where: {
+    //     id: user.id,
+    //   },
+    //   data: {
+    //     token: null,
+    //   },
+    // })
+
+    res.render('auth/mensaje', {
+      pagina: 'Reseteado',
+      mensaje:
+        'Hemos enviado un Email de confirmacion, presiona el enlace en el correo para confirmar y continuar.',
+    })
+  } catch (error) {
+    console.log(error)
+  }
 }

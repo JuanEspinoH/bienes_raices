@@ -20,3 +20,21 @@ export const userValidations = async (req) => {
 
   return validationResult(req)
 }
+export const resetValidations = async (req) => {
+  await check('password')
+    .isLength({ min: 6 })
+    .withMessage('La contraseña debe de ser minimo 6 caracteres')
+    .run(req)
+  await check('repetir_password')
+    .matches(req.body.password)
+    .withMessage('Las contraseñas no coinciden')
+    .run(req)
+
+  return validationResult(req)
+}
+
+export const passwordValidations = async (req) => {
+  await check('email').isEmail().trim().withMessage('Email no valido').run(req)
+
+  return validationResult(req)
+}

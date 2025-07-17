@@ -1,5 +1,7 @@
 import dotenv from 'dotenv'
 import express from 'express'
+import csrf from 'csurf'
+import cookieParser from 'cookie-parser'
 
 dotenv.config()
 
@@ -14,6 +16,8 @@ app.set('views', 'views')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static('public'))
+app.use(cookieParser())
+app.use(csrf({ cookie: true }))
 
 app.use('/auth', authRouter)
 
