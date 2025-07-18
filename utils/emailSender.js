@@ -60,7 +60,7 @@ export const enviarEmailPassword = async ({ email, token, nombre }) => {
           <a href=
           "${process.env.BACKEND_URL}${
       process.env.PORT ?? 3000
-    }/auth/olvide-password/${token}"
+    }/auth/resetear-password/${token}"
           ><strong>Reestablecer  AQUI.</strong> </a>
           </p>
       </body>

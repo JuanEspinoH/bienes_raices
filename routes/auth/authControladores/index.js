@@ -220,27 +220,41 @@ export const comprobarToken = async (req, res) => {
 export const nuevoPassword = async (req, res) => {
   const { password, repetir_password } = req.body
   const { token } = req.params
+  console.log(token)
 
-  const checkPassword = resetValidations(req)
+  const checkPassword = await resetValidations(req)
+
+  if (checkPassword.errors.length) {
+    return res.render('auth/reset-password', {
+      pagina: 'Reestablecer Contraseña',
+      errores: checkPassword.errors,
+      csrfToken: req.csrfToken(),
+      token: token,
+      usuario: {
+        password: req.body.password,
+        repetir_password: req.body.repetir_password,
+      },
+    })
+  }
 
   try {
     const passwordHasheada = await argon2.hash(password)
     const user = await prisma.usuario.findFirst({
       where: {
-        token,
+        token: token,
       },
     })
-    console.log(passwordHasheada)
+
     console.log(user)
 
-    // await prisma.usuario.update({
-    //   where: {
-    //     id: user.id,
-    //   },
-    //   data: {
-    //     token: null,
-    //   },
-    // })
+    await prisma.usuario.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        password: passwordHasheada,
+      },
+    })
 
     res.render('auth/mensaje', {
       pagina: 'Reseteado',
