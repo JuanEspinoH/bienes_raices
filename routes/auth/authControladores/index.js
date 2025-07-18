@@ -191,15 +191,9 @@ export const comprobarToken = async (req, res) => {
     console.log(user)
 
     if (user === null) {
-      return res.render('auth/reset-password', {
-        pagina: 'Reestablecer Contraseña',
-        errores: [{ msg: 'Email NO esta registrado o link caducado' }],
-        csrfToken: req.csrfToken(),
-        usuario: {
-          password: req.body.password,
-          repetir_password: req.body.repetir_password,
-          token: req.params.token,
-        },
+      return res.render('auth/mensaje', {
+        pagina: 'Usuario no encontrado',
+        mensaje: 'Usuario No encontrado o link caduco.',
       })
     }
   } catch (error) {
@@ -209,10 +203,10 @@ export const comprobarToken = async (req, res) => {
   res.render('auth/reset-password', {
     pagina: 'Reestablecer Contraseña',
     csrfToken: req.csrfToken(),
+    token: req.params.token,
     usuario: {
       password: req.body.password,
       repetir_password: req.body.repetir_password,
-      token: req.params.token,
     },
   })
 }
@@ -220,16 +214,16 @@ export const comprobarToken = async (req, res) => {
 export const nuevoPassword = async (req, res) => {
   const { password, repetir_password } = req.body
   const { token } = req.params
-  console.log(token)
 
   const checkPassword = await resetValidations(req)
+  console.log(checkPassword)
 
   if (checkPassword.errors.length) {
     return res.render('auth/reset-password', {
       pagina: 'Reestablecer Contraseña',
       errores: checkPassword.errors,
       csrfToken: req.csrfToken(),
-      token: token,
+      token: req.params.token,
       usuario: {
         password: req.body.password,
         repetir_password: req.body.repetir_password,
@@ -245,7 +239,18 @@ export const nuevoPassword = async (req, res) => {
       },
     })
 
-    console.log(user)
+    if (!user) {
+      return res.render('auth/reset-password', {
+        pagina: 'Reestablecer Contraseña',
+        errores: [{ msg: 'Usuario NO encantrado o link caducado' }],
+        csrfToken: req.csrfToken(),
+        token: req.params.token,
+        usuario: {
+          password: req.body.password,
+          repetir_password: req.body.repetir_password,
+        },
+      })
+    }
 
     await prisma.usuario.update({
       where: {
@@ -253,6 +258,7 @@ export const nuevoPassword = async (req, res) => {
       },
       data: {
         password: passwordHasheada,
+        token: null,
       },
     })
 
