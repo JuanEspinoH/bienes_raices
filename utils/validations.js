@@ -20,6 +20,26 @@ export const userValidations = async (req) => {
 
   return validationResult(req)
 }
+
+export const loginValidations = async (req) => {
+  await check('email')
+    .notEmpty()
+    .withMessage('Campo Obligatorio')
+    .isEmail()
+    .trim()
+    .withMessage('Email no valido')
+    .run(req)
+
+  await check('password')
+    .notEmpty()
+    .withMessage('Campo Obligatorio')
+    .isLength({ min: 6 })
+    .withMessage('La contraseña debe de ser minimo 6 caracteres')
+    .run(req)
+
+  return validationResult(req)
+}
+
 export const resetValidations = async (req) => {
   console.log(req.body)
   await check('password')

@@ -3,6 +3,7 @@ import {
   userValidations,
   passwordValidations,
   resetValidations,
+  loginValidations,
 } from '../../../utils/validations.js'
 import {
   enviarEmail,
@@ -11,15 +12,112 @@ import {
 } from '../../../utils/emailSender.js'
 import { generarToken } from '../../../utils/generarToken.js'
 import argon2 from 'argon2'
+import jwtGenerator from '../../../utils/jwtGenerator.js'
 
 export const formularioLogin = async (req, res) => {
-  res.render('auth/login', { autenticado: true, pagina: 'Iniciar Sesion' })
+  res.render('auth/login', {
+    autenticado: true,
+    pagina: 'Iniciar Sesion',
+    csrfToken: req.csrfToken(),
+    usuario: {
+      password: req.body.password,
+      email: req.body.email,
+    },
+  })
+}
+
+export const autenticar = async (req, res) => {
+  const { password, email } = req.body
+
+  const loginCheck = await loginValidations(req)
+
+  if (loginCheck.errors.length) {
+    return res.render('auth/login', {
+      autenticado: true,
+      pagina: 'Iniciar Sesion',
+      errores: loginCheck.errors,
+      csrfToken: req.csrfToken(),
+      usuario: {
+        password: req.body.password,
+        email: req.body.email,
+      },
+    })
+  }
+
+  try {
+    const usuario = await prisma.usuario.findFirst({
+      where: {
+        email,
+      },
+    })
+
+    if (usuario === null) {
+      return res.render('auth/login', {
+        autenticado: true,
+        pagina: 'Iniciar Sesion',
+        errores: [{ msg: 'Usuario no registrado' }],
+        csrfToken: req.csrfToken(),
+        usuario: {
+          password: req.body.password,
+          email: req.body.email,
+        },
+      })
+    }
+    if (usuario.confirmado !== true) {
+      return res.render('auth/login', {
+        autenticado: true,
+        pagina: 'Iniciar Sesion',
+        errores: [{ msg: 'Cuanta no ha sido confirmada' }],
+        csrfToken: req.csrfToken(),
+        usuario: {
+          password: req.body.password,
+          email: req.body.email,
+        },
+      })
+    }
+
+    const verify = await argon2.verify(usuario.password, password)
+
+    if (verify === false) {
+      return res.render('auth/login', {
+        autenticado: true,
+        pagina: 'Iniciar Sesion',
+        errores: [{ msg: 'Password Incorrecta' }],
+        csrfToken: req.csrfToken(),
+        usuario: {
+          password: req.body.password,
+          email: req.body.email,
+        },
+      })
+    }
+
+    const token = jwtGenerator({ id: usuario.id, nombre: usuario.nombre })
+    return res
+      .cookie('_token', token, {
+        httpOnly: true,
+        // secure: true,
+      })
+      .redirect('/mis-propiedades')
+  } catch (error) {
+    console.log(error)
+  }
+
+  return res.render('auth/login', {
+    autenticado: true,
+    pagina: 'Iniciar Sesion',
+    errores: loginCheck.errors,
+    csrfToken: req.csrfToken(),
+    usuario: {
+      password: req.body.password,
+      email: req.body.email,
+    },
+  })
 }
 
 export const formularioSignUp = async (req, res) => {
   res.render('auth/sign-up', {
     autenticado: true,
-    pagina: 'Crear Cuenta',
+    pagina: 'Iniciar Sesion',
     csrfToken: req.csrfToken(),
   })
 }
@@ -69,11 +167,12 @@ export const registro = async (req, res) => {
     }
 
     const token = generarToken()
+    const passwordHasheada = await argon2.hash(password)
     const newUser = await prisma.usuario.create({
       data: {
         nombre,
         email,
-        password,
+        password: passwordHasheada,
         token,
       },
     })

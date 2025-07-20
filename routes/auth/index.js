@@ -9,11 +9,13 @@ import {
   resetPassword,
   nuevoPassword,
   comprobarToken,
+  autenticar,
 } from './authControladores/index.js'
 
 const router = Router()
 
 router.get('/login', formularioLogin)
+router.post('/login', autenticar)
 
 router.get('/sign-up', formularioSignUp)
 router.post('/sign-up', registro)
