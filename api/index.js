@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 dotenv.config()
 
 import authRouter from '../routes/auth/index.js'
+import usuarioRouter from '../routes/propiedades/index.js'
 
 const app = express()
 app.set('x-powered-by', false)
@@ -20,13 +21,7 @@ app.use(cookieParser())
 app.use(csrf({ cookie: true }))
 
 app.use('/auth', authRouter)
-
-app.get('/', function (req, res) {
-  res.send('OKey 11')
-})
-// app.get('/auth/login', function (req, res) {
-//   res.render('auth/login')
-// })
+app.use('/', usuarioRouter)
 
 app.listen(3000, () => console.log('Server ready on port 3000.'))
 
