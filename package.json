@@ -6,8 +6,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon api/index.js",
-    "css": "postcss public/css/tailwind.css -o public/css/app.css --watch"
+    "start": "nodemon api/index.js",
+    "css": "postcss public/css/tailwind.css -o public/css/app.css --watch",
+    "js": "webpack --watch",
+    "dev": "concurrently \"npm run css\" \"npm run js\" "
   },
   "keywords": [],
   "author": "",
@@ -32,11 +34,14 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.0",
     "nodemon": "^3.1.10",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
     "prisma": "^6.10.1",
     "tailwindcss": "^3.4.17",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "webpack": "^5.101.0",
+    "webpack-cli": "^6.0.1"
   }
 }
