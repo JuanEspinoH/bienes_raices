@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "./prisma/generated/client"
@@ -15,14 +9,46 @@ datasource db {
 }
 
 model Usuario {
-  id         String    @id @default(uuid())
-  createdAt  DateTime  @default(now())
-  email      String    @unique
-  nombre     String
-  token      String?
-  password   String
-  confirmado Boolean?
-  updatedAt  DateTime? @updatedAt
+  id          String      @id @default(uuid())
+  createdAt   DateTime    @default(now())
+  email       String      @unique
+  nombre      String
+  token       String?
+  password    String
+  confirmado  Boolean?
+  updatedAt   DateTime?   @updatedAt
+  propiedades Propiedad[]
+}
+
+model Propiedad {
+  id              String    @id @default(uuid())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @updatedAt
+  descripcion     String
+  habitaciones    Int
+  estacionamiento Int
+  wc              Int
+  calle           String    @db.VarChar(60)
+  lat             String
+  lng             String
+  imagen          String
+  publicado       Boolean   @default(false)
+  precio          Precio    @relation(fields: [precioId], references: [nombre])
+  precioId        String    @unique
+  categoria       Categoria @relation(fields: [categoriaId], references: [nombre])
+  categoriaId     String    @unique
+  usuario         Usuario   @relation(fields: [usuarioId], references: [id])
+  usuarioId       String
+}
+
+model Categoria {
+  nombre    String      @unique @db.VarChar(30)
+  propiedad Propiedad[]
+}
+
+model Precio {
+  nombre    String      @unique @db.VarChar(30)
+  propiedad Propiedad[]
 }
 
 model Session {
@@ -31,5 +57,5 @@ model Session {
   data      String
   expiresAt DateTime
 
-  @@map(name: "sessions")
+  @@map("sessions")
 }

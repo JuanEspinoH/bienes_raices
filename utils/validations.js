@@ -59,3 +59,24 @@ export const passwordValidations = async (req) => {
 
   return validationResult(req)
 }
+
+export const propiedadesValidations = async (req) => {
+  await check('titulo')
+    .isEmpty()
+    .withMessage('El campo Titulo no debe de estar vacio')
+    .run(req)
+  await check('descripcion')
+    .isEmpty()
+    .withMessage('El campo Descripcion no debe de estar vacio')
+    .run(req)
+  await check('categoria')
+    .isNumeric()
+    .withMessage('Selecciona una categoria')
+    .run(req)
+  await check('precio').isNumeric().withMessage('Selecciona un precio').run(req)
+
+  return validationResult(req)
+}
+
+// propiedades
+// desc max 200
