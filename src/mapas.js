@@ -1,6 +1,34 @@
 ;(function () {
-  const lat = 20.67444163271174
-  const lng = -103.38739216304566
+  let actualLng = -99.1676463
+  let actualLat = 19.4269903
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      // Función que se ejecuta cuando se obtiene la ubicación correctamente
+      function (position) {
+        actualLat = position.coords.latitude
+        actualLng = position.coords.longitude
+      },
+      function (error) {
+        if (error.code === 1) {
+          document
+            .querySelector('#geoErrorContainer')
+            .classList.remove('hidden')
+          document.querySelector('#geoErrorContainer').classList.add('block')
+        }
+      }
+    )
+  }
+  console.log(document.querySelector('#lat').value.length)
+  console.log(document.querySelector('#lat').value)
+  const lat =
+    document.querySelector('#lat').value.length == 0
+      ? actualLat
+      : document.querySelector('#lat').value
+  const lng =
+    document.querySelector('#lng').value.length == 0
+      ? actualLng
+      : document.querySelector('#lng').value
+
   const mapa = L.map('mapa').setView([lat, lng], 16)
 
   let marker

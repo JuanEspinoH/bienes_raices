@@ -34,9 +34,9 @@ model Propiedad {
   imagen          String
   publicado       Boolean   @default(false)
   precio          Precio    @relation(fields: [precioId], references: [nombre])
-  precioId        String    @unique
+  precioId        String
   categoria       Categoria @relation(fields: [categoriaId], references: [nombre])
-  categoriaId     String    @unique
+  categoriaId     String
   usuario         Usuario   @relation(fields: [usuarioId], references: [id])
   usuarioId       String
 }

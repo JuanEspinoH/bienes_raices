@@ -57,12 +57,6 @@ CREATE TABLE "sessions" (
 CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Propiedad_precioId_key" ON "Propiedad"("precioId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Propiedad_categoriaId_key" ON "Propiedad"("categoriaId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Categoria_nombre_key" ON "Categoria"("nombre");
 
 -- CreateIndex

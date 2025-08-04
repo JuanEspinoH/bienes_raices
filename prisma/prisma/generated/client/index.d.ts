@@ -6983,8 +6983,6 @@ export namespace Prisma {
 
   export type PropiedadWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    precioId?: string
-    categoriaId?: string
     AND?: PropiedadWhereInput | PropiedadWhereInput[]
     OR?: PropiedadWhereInput[]
     NOT?: PropiedadWhereInput | PropiedadWhereInput[]
@@ -6999,11 +6997,13 @@ export namespace Prisma {
     lng?: StringFilter<"Propiedad"> | string
     imagen?: StringFilter<"Propiedad"> | string
     publicado?: BoolFilter<"Propiedad"> | boolean
+    precioId?: StringFilter<"Propiedad"> | string
+    categoriaId?: StringFilter<"Propiedad"> | string
     usuarioId?: StringFilter<"Propiedad"> | string
     precio?: XOR<PrecioScalarRelationFilter, PrecioWhereInput>
     categoria?: XOR<CategoriaScalarRelationFilter, CategoriaWhereInput>
     usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
-  }, "id" | "precioId" | "categoriaId">
+  }, "id">
 
   export type PropiedadOrderByWithAggregationInput = {
     id?: SortOrder
