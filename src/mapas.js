@@ -3,7 +3,6 @@
   let actualLat = 19.4269903
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
-      // Función que se ejecuta cuando se obtiene la ubicación correctamente
       function (position) {
         actualLat = position.coords.latitude
         actualLng = position.coords.longitude

@@ -126,3 +126,11 @@ export const deletePropiedades = (req, res) => {
     barra: true,
   })
 }
+
+export const agregarImagen = async (req, res) => {
+  return res.render('propiedades/agregar-imagen', {
+    barra: true,
+    pagina: 'Agregar Imangen ',
+    csrfToken: req.csrfToken(),
+  })
+}
