@@ -93,30 +93,33 @@ export const crearPropiedadesFormulario = async (req, res) => {
         },
       },
     })
+
+    const { id } = newPropiedad
+
+    res.redirect(`/propiedades/agregar-imagen/${id}`)
   } catch (error) {
     console.log(error)
+    return res.render('propiedades/crear', {
+      pagina: 'Crear Propiedades',
+      csrfToken: req.csrfToken(),
+      barra: true,
+      categorias,
+      errores: [{ msg: 'Un error ocurrio' }],
+      precios,
+      data: {
+        titulo: req.body.titulo,
+        descripcion: req.body.descripcion,
+        wc: req.body.wc,
+        estacionamiento: req.body.estacionamiento,
+        habitaciones: req.body.habitaciones,
+        categoria: req.body.categoria,
+        precio: req.body.precio,
+        calle: req.body.calle,
+        lat: req.body.lat,
+        lng: req.body.lng,
+      },
+    })
   }
-
-  return res.render('propiedades/crear', {
-    pagina: 'Crear Propiedades',
-    csrfToken: req.csrfToken(),
-    barra: true,
-    exito: true,
-    categorias,
-    precios,
-    data: {
-      titulo: '',
-      descripcion: '',
-      wc: '',
-      estacionamiento: '',
-      habitaciones: '',
-      categoria: '',
-      precio: '',
-      calle: '',
-      lat: '',
-      lng: '',
-    },
-  })
 }
 
 export const deletePropiedades = (req, res) => {
@@ -128,9 +131,34 @@ export const deletePropiedades = (req, res) => {
 }
 
 export const agregarImagen = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const propiedad = await prisma.propiedad.findFirst({
+      where: {
+        id,
+      },
+    })
+
+    if (!propiedad) {
+      return res.redirect('/mis-propiedades')
+    }
+    // if (!propiedad.publicado) {
+    //   return res.redirect('/mis-propiedades')
+    // }
+    console.log(propiedad.usuarioId.toString() === req.usuario.id.toString())
+
+    if (propiedad.usuarioId.toString() !== req.usuario.id.toString()) {
+      return res.redirect('/mis-propiedades')
+    }
+    console.log(req.usuario)
+  } catch (error) {
+    console.log(error)
+  }
   return res.render('propiedades/agregar-imagen', {
     barra: true,
-    pagina: 'Agregar Imangen ',
+    pagina: `Agregar Imangen ${propiedad.titulo} `,
     csrfToken: req.csrfToken(),
+    propiedad,
   })
 }
