@@ -68,6 +68,7 @@ export const crearPropiedadesFormulario = async (req, res) => {
   try {
     const newPropiedad = await prisma.propiedad.create({
       data: {
+        titulo: req.body.titulo,
         descripcion: req.body.descripcion,
         habitaciones: Number(req.body.habitaciones),
         estacionamiento: Number(req.body.estacionamiento),
@@ -139,6 +140,7 @@ export const agregarImagen = async (req, res) => {
         id,
       },
     })
+    // console.log(propiedad)
 
     if (!propiedad) {
       return res.redirect('/mis-propiedades')
@@ -146,19 +148,20 @@ export const agregarImagen = async (req, res) => {
     // if (!propiedad.publicado) {
     //   return res.redirect('/mis-propiedades')
     // }
-    console.log(propiedad.usuarioId.toString() === req.usuario.id.toString())
 
     if (propiedad.usuarioId.toString() !== req.usuario.id.toString()) {
       return res.redirect('/mis-propiedades')
     }
-    console.log(req.usuario)
+    console.log(req.file)
+    return res.render('propiedades/agregar-imagen', {
+      barra: true,
+      pagina: `Agregar Imangen ${propiedad.titulo} `,
+      csrfToken: req.csrfToken(),
+      propiedad: propiedad,
+    })
   } catch (error) {
     console.log(error)
   }
-  return res.render('propiedades/agregar-imagen', {
-    barra: true,
-    pagina: `Agregar Imangen ${propiedad.titulo} `,
-    csrfToken: req.csrfToken(),
-    propiedad,
-  })
 }
+
+export const almacenarImagen = async (req, res) => {}

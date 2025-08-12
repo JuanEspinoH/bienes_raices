@@ -17,6 +17,7 @@ CREATE TABLE "Propiedad" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
+    "titulo" TEXT NOT NULL,
     "descripcion" TEXT NOT NULL,
     "habitaciones" INTEGER NOT NULL,
     "estacionamiento" INTEGER NOT NULL,

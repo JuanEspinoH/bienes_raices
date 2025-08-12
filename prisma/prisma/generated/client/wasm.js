@@ -135,6 +135,7 @@ exports.Prisma.PropiedadScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  titulo: 'titulo',
   descripcion: 'descripcion',
   habitaciones: 'habitaciones',
   estacionamiento: 'estacionamiento',

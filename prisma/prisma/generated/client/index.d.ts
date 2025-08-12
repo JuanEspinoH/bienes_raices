@@ -2462,6 +2462,7 @@ export namespace Prisma {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    titulo: string | null
     descripcion: string | null
     habitaciones: number | null
     estacionamiento: number | null
@@ -2480,6 +2481,7 @@ export namespace Prisma {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    titulo: string | null
     descripcion: string | null
     habitaciones: number | null
     estacionamiento: number | null
@@ -2498,6 +2500,7 @@ export namespace Prisma {
     id: number
     createdAt: number
     updatedAt: number
+    titulo: number
     descripcion: number
     habitaciones: number
     estacionamiento: number
@@ -2530,6 +2533,7 @@ export namespace Prisma {
     id?: true
     createdAt?: true
     updatedAt?: true
+    titulo?: true
     descripcion?: true
     habitaciones?: true
     estacionamiento?: true
@@ -2548,6 +2552,7 @@ export namespace Prisma {
     id?: true
     createdAt?: true
     updatedAt?: true
+    titulo?: true
     descripcion?: true
     habitaciones?: true
     estacionamiento?: true
@@ -2566,6 +2571,7 @@ export namespace Prisma {
     id?: true
     createdAt?: true
     updatedAt?: true
+    titulo?: true
     descripcion?: true
     habitaciones?: true
     estacionamiento?: true
@@ -2671,6 +2677,7 @@ export namespace Prisma {
     id: string
     createdAt: Date
     updatedAt: Date | null
+    titulo: string
     descripcion: string
     habitaciones: number
     estacionamiento: number
@@ -2708,6 +2715,7 @@ export namespace Prisma {
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    titulo?: boolean
     descripcion?: boolean
     habitaciones?: boolean
     estacionamiento?: boolean
@@ -2729,6 +2737,7 @@ export namespace Prisma {
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    titulo?: boolean
     descripcion?: boolean
     habitaciones?: boolean
     estacionamiento?: boolean
@@ -2750,6 +2759,7 @@ export namespace Prisma {
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    titulo?: boolean
     descripcion?: boolean
     habitaciones?: boolean
     estacionamiento?: boolean
@@ -2771,6 +2781,7 @@ export namespace Prisma {
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    titulo?: boolean
     descripcion?: boolean
     habitaciones?: boolean
     estacionamiento?: boolean
@@ -2785,7 +2796,7 @@ export namespace Prisma {
     usuarioId?: boolean
   }
 
-  export type PropiedadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "descripcion" | "habitaciones" | "estacionamiento" | "wc" | "calle" | "lat" | "lng" | "imagen" | "publicado" | "precioId" | "categoriaId" | "usuarioId", ExtArgs["result"]["propiedad"]>
+  export type PropiedadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "titulo" | "descripcion" | "habitaciones" | "estacionamiento" | "wc" | "calle" | "lat" | "lng" | "imagen" | "publicado" | "precioId" | "categoriaId" | "usuarioId", ExtArgs["result"]["propiedad"]>
   export type PropiedadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     precio?: boolean | PrecioDefaultArgs<ExtArgs>
     categoria?: boolean | CategoriaDefaultArgs<ExtArgs>
@@ -2813,6 +2824,7 @@ export namespace Prisma {
       id: string
       createdAt: Date
       updatedAt: Date | null
+      titulo: string
       descripcion: string
       habitaciones: number
       estacionamiento: number
@@ -3254,6 +3266,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Propiedad", 'String'>
     readonly createdAt: FieldRef<"Propiedad", 'DateTime'>
     readonly updatedAt: FieldRef<"Propiedad", 'DateTime'>
+    readonly titulo: FieldRef<"Propiedad", 'String'>
     readonly descripcion: FieldRef<"Propiedad", 'String'>
     readonly habitaciones: FieldRef<"Propiedad", 'Int'>
     readonly estacionamiento: FieldRef<"Propiedad", 'Int'>
@@ -6730,6 +6743,7 @@ export namespace Prisma {
     id: 'id',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
+    titulo: 'titulo',
     descripcion: 'descripcion',
     habitaciones: 'habitaciones',
     estacionamiento: 'estacionamiento',
@@ -6943,6 +6957,7 @@ export namespace Prisma {
     id?: StringFilter<"Propiedad"> | string
     createdAt?: DateTimeFilter<"Propiedad"> | Date | string
     updatedAt?: DateTimeNullableFilter<"Propiedad"> | Date | string | null
+    titulo?: StringFilter<"Propiedad"> | string
     descripcion?: StringFilter<"Propiedad"> | string
     habitaciones?: IntFilter<"Propiedad"> | number
     estacionamiento?: IntFilter<"Propiedad"> | number
@@ -6964,6 +6979,7 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
+    titulo?: SortOrder
     descripcion?: SortOrder
     habitaciones?: SortOrder
     estacionamiento?: SortOrder
@@ -6988,6 +7004,7 @@ export namespace Prisma {
     NOT?: PropiedadWhereInput | PropiedadWhereInput[]
     createdAt?: DateTimeFilter<"Propiedad"> | Date | string
     updatedAt?: DateTimeNullableFilter<"Propiedad"> | Date | string | null
+    titulo?: StringFilter<"Propiedad"> | string
     descripcion?: StringFilter<"Propiedad"> | string
     habitaciones?: IntFilter<"Propiedad"> | number
     estacionamiento?: IntFilter<"Propiedad"> | number
@@ -7009,6 +7026,7 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
+    titulo?: SortOrder
     descripcion?: SortOrder
     habitaciones?: SortOrder
     estacionamiento?: SortOrder
@@ -7035,6 +7053,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Propiedad"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Propiedad"> | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter<"Propiedad"> | Date | string | null
+    titulo?: StringWithAggregatesFilter<"Propiedad"> | string
     descripcion?: StringWithAggregatesFilter<"Propiedad"> | string
     habitaciones?: IntWithAggregatesFilter<"Propiedad"> | number
     estacionamiento?: IntWithAggregatesFilter<"Propiedad"> | number
@@ -7251,6 +7270,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    titulo: string
     descripcion: string
     habitaciones: number
     estacionamiento: number
@@ -7269,6 +7289,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    titulo: string
     descripcion: string
     habitaciones: number
     estacionamiento: number
@@ -7287,6 +7308,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    titulo?: StringFieldUpdateOperationsInput | string
     descripcion?: StringFieldUpdateOperationsInput | string
     habitaciones?: IntFieldUpdateOperationsInput | number
     estacionamiento?: IntFieldUpdateOperationsInput | number
@@ -7305,6 +7327,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    titulo?: StringFieldUpdateOperationsInput | string
     descripcion?: StringFieldUpdateOperationsInput | string
     habitaciones?: IntFieldUpdateOperationsInput | number
     estacionamiento?: IntFieldUpdateOperationsInput | number
@@ -7323,6 +7346,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    titulo: string
     descripcion: string
     habitaciones: number
     estacionamiento: number
@@ -7341,6 +7365,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    titulo?: StringFieldUpdateOperationsInput | string
     descripcion?: StringFieldUpdateOperationsInput | string
     habitaciones?: IntFieldUpdateOperationsInput | number
     estacionamiento?: IntFieldUpdateOperationsInput | number
@@ -7356,6 +7381,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    titulo?: StringFieldUpdateOperationsInput | string
     descripcion?: StringFieldUpdateOperationsInput | string
     habitaciones?: IntFieldUpdateOperationsInput | number
     estacionamiento?: IntFieldUpdateOperationsInput | number
@@ -7695,6 +7721,7 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    titulo?: SortOrder
     descripcion?: SortOrder
     habitaciones?: SortOrder
     estacionamiento?: SortOrder
@@ -7719,6 +7746,7 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    titulo?: SortOrder
     descripcion?: SortOrder
     habitaciones?: SortOrder
     estacionamiento?: SortOrder
@@ -7737,6 +7765,7 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    titulo?: SortOrder
     descripcion?: SortOrder
     habitaciones?: SortOrder
     estacionamiento?: SortOrder
@@ -8217,6 +8246,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    titulo: string
     descripcion: string
     habitaciones: number
     estacionamiento: number
@@ -8234,6 +8264,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    titulo: string
     descripcion: string
     habitaciones: number
     estacionamiento: number
@@ -8280,6 +8311,7 @@ export namespace Prisma {
     id?: StringFilter<"Propiedad"> | string
     createdAt?: DateTimeFilter<"Propiedad"> | Date | string
     updatedAt?: DateTimeNullableFilter<"Propiedad"> | Date | string | null
+    titulo?: StringFilter<"Propiedad"> | string
     descripcion?: StringFilter<"Propiedad"> | string
     habitaciones?: IntFilter<"Propiedad"> | number
     estacionamiento?: IntFilter<"Propiedad"> | number
@@ -8422,6 +8454,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    titulo: string
     descripcion: string
     habitaciones: number
     estacionamiento: number
@@ -8439,6 +8472,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    titulo: string
     descripcion: string
     habitaciones: number
     estacionamiento: number
@@ -8482,6 +8516,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    titulo: string
     descripcion: string
     habitaciones: number
     estacionamiento: number
@@ -8499,6 +8534,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    titulo: string
     descripcion: string
     habitaciones: number
     estacionamiento: number
@@ -8542,6 +8578,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    titulo: string
     descripcion: string
     habitaciones: number
     estacionamiento: number
@@ -8559,6 +8596,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    titulo?: StringFieldUpdateOperationsInput | string
     descripcion?: StringFieldUpdateOperationsInput | string
     habitaciones?: IntFieldUpdateOperationsInput | number
     estacionamiento?: IntFieldUpdateOperationsInput | number
@@ -8576,6 +8614,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    titulo?: StringFieldUpdateOperationsInput | string
     descripcion?: StringFieldUpdateOperationsInput | string
     habitaciones?: IntFieldUpdateOperationsInput | number
     estacionamiento?: IntFieldUpdateOperationsInput | number
@@ -8593,6 +8632,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    titulo?: StringFieldUpdateOperationsInput | string
     descripcion?: StringFieldUpdateOperationsInput | string
     habitaciones?: IntFieldUpdateOperationsInput | number
     estacionamiento?: IntFieldUpdateOperationsInput | number
@@ -8610,6 +8650,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    titulo: string
     descripcion: string
     habitaciones: number
     estacionamiento: number
@@ -8627,6 +8668,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    titulo?: StringFieldUpdateOperationsInput | string
     descripcion?: StringFieldUpdateOperationsInput | string
     habitaciones?: IntFieldUpdateOperationsInput | number
     estacionamiento?: IntFieldUpdateOperationsInput | number
@@ -8644,6 +8686,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    titulo?: StringFieldUpdateOperationsInput | string
     descripcion?: StringFieldUpdateOperationsInput | string
     habitaciones?: IntFieldUpdateOperationsInput | number
     estacionamiento?: IntFieldUpdateOperationsInput | number
@@ -8661,6 +8704,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    titulo?: StringFieldUpdateOperationsInput | string
     descripcion?: StringFieldUpdateOperationsInput | string
     habitaciones?: IntFieldUpdateOperationsInput | number
     estacionamiento?: IntFieldUpdateOperationsInput | number
@@ -8678,6 +8722,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    titulo: string
     descripcion: string
     habitaciones: number
     estacionamiento: number
@@ -8695,6 +8740,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    titulo?: StringFieldUpdateOperationsInput | string
     descripcion?: StringFieldUpdateOperationsInput | string
     habitaciones?: IntFieldUpdateOperationsInput | number
     estacionamiento?: IntFieldUpdateOperationsInput | number
@@ -8712,6 +8758,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    titulo?: StringFieldUpdateOperationsInput | string
     descripcion?: StringFieldUpdateOperationsInput | string
     habitaciones?: IntFieldUpdateOperationsInput | number
     estacionamiento?: IntFieldUpdateOperationsInput | number
@@ -8729,6 +8776,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    titulo?: StringFieldUpdateOperationsInput | string
     descripcion?: StringFieldUpdateOperationsInput | string
     habitaciones?: IntFieldUpdateOperationsInput | number
     estacionamiento?: IntFieldUpdateOperationsInput | number
