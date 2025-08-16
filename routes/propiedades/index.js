@@ -8,7 +8,10 @@ import {
   almacenarImagen,
 } from './propiedadesControladores/index.js'
 import protegerRuta from '../../middleware/protegerRuta.js'
-import upload from '../../middleware/subirArchivo.js'
+import upload from '../../middleware/subirImagen.js'
+import cloudinarySubirImagen from '../../middleware/cloudinarySubirImagen.js'
+
+const uploadCM = cloudinarySubirImagen()
 
 const router = Router()
 
@@ -21,7 +24,8 @@ router.get('/propiedades/agregar-imagen/:id', protegerRuta, agregarImagen)
 router.post(
   '/propiedades/agregar-imagen/:id',
   protegerRuta,
-  upload.single('imagen'),
+  // upload.single('imagen'),
+  uploadCM.single('imagen'),
   almacenarImagen
 )
 

@@ -1,7 +1,6 @@
 import { Dropzone } from 'dropzone'
 
-const token = document.querySelector(`meta[name="csrf-token"]`)
-console.log(token.content)
+const token = document.querySelector(`meta[name="csrf-token"]`).content
 
 Dropzone.autoDiscover = false
 
@@ -11,7 +10,7 @@ let myDropzone = new Dropzone('#imagen', {
   maxFilesize: 5,
   maxFiles: 1,
   parallelUploads: 1,
-  autoProcessQueue: true,
+  autoProcessQueue: false,
   addRemoveLinks: true,
   dictRemoveFile: 'Borrar Archivo',
   dictMaxFilesExceeded: 'El limite es 1 archivo',
@@ -19,8 +18,18 @@ let myDropzone = new Dropzone('#imagen', {
     'CSRF-Token': token,
   },
   paramName: 'imagen',
-})
+  init: function () {
+    const dropzone = this
+    const btnPublicar = document.querySelector('#publicar')
 
-myDropzone.on('addedfile', (file) => {
-  console.log(`File added: ${file.name}`)
+    btnPublicar.addEventListener('click', () => {
+      dropzone.processQueue()
+    })
+
+    dropzone.on('queuecomplete', function (file, mensaje) {
+      if (dropzone.getActiveFiles().length == 0) {
+        window.location.href = '/mis-propiedades'
+      }
+    })
+  },
 })

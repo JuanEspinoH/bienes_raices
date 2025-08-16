@@ -11,13 +11,16 @@ block contenido
         h2.text-center.text-2xl.font-extrabold=pagina
 
             div(id="geoErrorContainer" class="max-w-md mx-auto my-10 bg-red-600 hidden")
-                    p(class= "text-white  uppercase  text-xs text-center placeholder p-2 mn-1 font-bold") Permite al navegador saber tu localizacion para mejor la experiencia de usuario.
+                    p(class= "dropzone text-white  uppercase  text-xs text-center placeholder p-2 mn-1 font-bold") Permite al navegador saber tu localizacion para mejor la experiencia de usuario.
 
         div(class="bg-white shadow py-8 px-4 rounded mx-auto max-w-4xl my-10 md:px-10")
             form(id="imagen" class="dropzone border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center" method="POST" action=`/propiedades/agregar-imagen/${propiedad.id}` novalidate)
                 input(type="hidden" name="_csrf" value=csrfToken)
+                //- input(type="file" name="imagen" accept="image/png,image/jpeg,image/jpg")
+    
+                input(type="submit" id="publicar"  value="Añadir Imagen" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer rounded uppercase mt-5") 
 
-            input(type="submit" value="Añadir Imagen" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer rounded uppercase mt-5") 
+
 
 block scripts
     script(src="/js/agregarImagen.js")

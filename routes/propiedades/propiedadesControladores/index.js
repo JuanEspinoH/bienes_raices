@@ -1,5 +1,6 @@
 import prisma from '../../../database/db.js'
 import { propiedadesValidations } from '../../../utils/validations.js'
+import cloudinaryUploadingImg from '../../../utils/cloudinaryUploadImg.js'
 
 export const admin = (req, res) => {
   return res.render('propiedades/admin', {
@@ -140,7 +141,6 @@ export const agregarImagen = async (req, res) => {
         id,
       },
     })
-    // console.log(propiedad)
 
     if (!propiedad) {
       return res.redirect('/mis-propiedades')
@@ -152,8 +152,8 @@ export const agregarImagen = async (req, res) => {
     if (propiedad.usuarioId.toString() !== req.usuario.id.toString()) {
       return res.redirect('/mis-propiedades')
     }
-    console.log(req.file)
-    return res.render('propiedades/agregar-imagen', {
+
+    return res.render(`propiedades/agregar-imagen`, {
       barra: true,
       pagina: `Agregar Imangen ${propiedad.titulo} `,
       csrfToken: req.csrfToken(),
@@ -164,4 +164,30 @@ export const agregarImagen = async (req, res) => {
   }
 }
 
-export const almacenarImagen = async (req, res) => {}
+export const almacenarImagen = async (req, res, next) => {
+  const { id } = req.params
+  let propiedad
+
+  try {
+    propiedad = await prisma.propiedad.findFirst({
+      where: {
+        id,
+      },
+    })
+    if (req.file.path) {
+      const uploadImgPublicId = await cloudinaryUploadingImg(req.file.path)
+      console.log(uploadImgPublicId)
+    }
+
+    next()
+
+    return res.render(`propiedades/agregar-imagen`, {
+      barra: true,
+      pagina: `Agregar Imangen post ${propiedad.titulo} `,
+      csrfToken: req.csrfToken(),
+      propiedad: propiedad,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}

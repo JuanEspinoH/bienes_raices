@@ -3,11 +3,11 @@ import path from 'path'
 import { generarToken } from '../utils/generarToken.js'
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, '../public/uploads/')
+  destination: function (req, file, cb) {
+    cb(null, './public/img/uploads/')
   },
-  filename: (req, file, cb) => {
-    cb(null, generarToken() + path.extname(file.originalname))
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
   },
 })
 
