@@ -41,7 +41,6 @@ export const loginValidations = async (req) => {
 }
 
 export const resetValidations = async (req) => {
-  console.log(req.body)
   await check('password')
     .isLength({ min: 6 })
     .withMessage('La contraseña debe de ser minimo 6 caracteres')

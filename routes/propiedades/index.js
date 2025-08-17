@@ -24,7 +24,7 @@ router.get('/propiedades/agregar-imagen/:id', protegerRuta, agregarImagen)
 router.post(
   '/propiedades/agregar-imagen/:id',
   protegerRuta,
-  // upload.single('imagen'),
+  // upload.single('imagen'), este era el middleware que solo usa multer , el de abajo es el multer con cloudinary que sube automaticamnete la imagen
   uploadCM.single('imagen'),
   almacenarImagen
 )

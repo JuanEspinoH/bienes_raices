@@ -167,6 +167,7 @@ export const agregarImagen = async (req, res) => {
 export const almacenarImagen = async (req, res, next) => {
   const { id } = req.params
   let propiedad
+  const imgData = await req.file
 
   try {
     propiedad = await prisma.propiedad.findFirst({
@@ -174,19 +175,17 @@ export const almacenarImagen = async (req, res, next) => {
         id,
       },
     })
-    if (req.file.path) {
-      const uploadImgPublicId = await cloudinaryUploadingImg(req.file.path)
-      console.log(uploadImgPublicId)
-    }
 
-    next()
-
-    return res.render(`propiedades/agregar-imagen`, {
-      barra: true,
-      pagina: `Agregar Imangen post ${propiedad.titulo} `,
-      csrfToken: req.csrfToken(),
-      propiedad: propiedad,
+    await prisma.propiedad.update({
+      where: {
+        id,
+      },
+      data: {
+        imagen: req.file.path,
+      },
     })
+
+    return res.redirect('/mis-propiedades')
   } catch (error) {
     console.log(error)
   }
