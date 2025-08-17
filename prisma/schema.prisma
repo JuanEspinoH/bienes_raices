@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./prisma/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id         String    @id @default(uuid())
+  createdAt  DateTime  @default(now())
+  email      String    @unique
+  nombre     String
+  token      String?
+  password   String
+  confirmado Boolean?
+  updatedAt  DateTime? @updatedAt
+  propiedades Propiedad []
+}
+
+model Propiedad {
+  id              String    @id @default(uuid())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @updatedAt
+  titulo     String
+  descripcion     String
+  habitaciones    Int
+  estacionamiento Int
+  wc              Int
+  calle           String    @db.VarChar(60)
+  lat             String
+  lng             String
+  imagen          String
+  publicado       Boolean   @default(false)
+  precio Precio @relation(fields: [precioId],references: [nombre])
+  precioId String 
+  categoria Categoria @relation(fields: [categoriaId],references: [nombre])
+  categoriaId String 
+  usuario Usuario @relation(fields: [usuarioId],references: [id])
+  usuarioId String
+}
+
+model Categoria {
+  nombre String @unique @db.VarChar(30)
+  propiedad Propiedad[]
+}
+
+model Precio {
+  nombre String @unique @db.VarChar(30)
+  propiedad Propiedad[]
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+
+  @@map("sessions")
+}
