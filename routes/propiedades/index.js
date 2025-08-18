@@ -15,6 +15,11 @@ const uploadCM = cloudinarySubirImagen()
 
 const router = Router()
 
+router.get('/', (req, res) => {
+  res.json({
+    msg: 'test home',
+  })
+})
 router.get('/mis-propiedades', protegerRuta, admin)
 router.get('/propiedades/crear', protegerRuta, crearPropiedades)
 router.post('/propiedades/crear', protegerRuta, crearPropiedadesFormulario)
